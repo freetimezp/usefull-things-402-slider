@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Belanosima&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
 * {
     margin: 0;
@@ -6,122 +6,650 @@
     box-sizing: border-box;
 }
 
+:root {
+    --accent: #ff4d8d;
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, 0.45);
+}
+
+html,
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Belanosima", sans-serif;
-    background: #ff7c7c;
-    transition: background 1s ease;
-    overflow: hidden;
-}
-
-/* Glass wrapper */
-.slider-wrapper {
-    width: 900px;
-    height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 30px;
-    padding: 20px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-}
-
-.carousel {
-    display: flex;
     width: 100%;
     height: 100%;
-    gap: 20px;
 }
 
-/* CARD */
-.card {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 25px;
+body {
+    font-family: "Manrope", sans-serif;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 50, 120, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(100, 80, 255, 0.08),
+            transparent 30%
+        ),
+        #08080c;
+
+    color: white;
+
+    transition:
+        background 1.2s ease,
+        --accent 0.8s ease;
+}
+
+/* ========================================
+   AMBIENT BACKGROUND
+======================================== */
+
+.ambient {
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    opacity: 0.15;
+
+    transition:
+        background 1.2s ease,
+        transform 2s ease;
+}
+
+.ambient-1 {
+    top: -200px;
+    left: -150px;
+
+    background: #ff4d8d;
+
+    animation: floatOne 12s ease-in-out infinite;
+}
+
+.ambient-2 {
+    right: -200px;
+    bottom: -200px;
+
+    background: #6c5ce7;
+
+    animation: floatTwo 15s ease-in-out infinite;
+}
+
+.ambient-3 {
+    top: 40%;
+    left: 45%;
+
+    width: 200px;
+    height: 200px;
+
+    background: var(--accent);
+
+    opacity: 0.08;
+
+    filter: blur(80px);
+
+    transition: background 1s ease;
+}
+
+@keyframes floatOne {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(100px, 60px);
+    }
+}
+
+@keyframes floatTwo {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-80px, -70px);
+    }
+}
+
+/* ========================================
+   NOISE
+======================================== */
+
+.noise {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0.035;
+
+    z-index: 20;
+
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* ========================================
+   MAIN WRAPPER
+======================================== */
+
+.slider-wrapper {
+    position: relative;
+
+    width: min(1100px, 90vw);
+    height: min(700px, 82vh);
+
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: 40px;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    transition: flex 0.9s cubic-bezier(0.15, 0.75, 0.35, 1), background 1s, transform 0.2s ease;
+
+    padding: 45px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 35px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0.015)
+    );
+
+    backdrop-filter: blur(30px);
+
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    z-index: 5;
 }
 
-/* When active */
+/* ========================================
+   TOP LABEL
+======================================== */
+
+.top-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 25px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 4px;
+
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    box-shadow:
+        0 0 10px var(--accent),
+        0 0 25px var(--accent);
+
+    transition: background 0.8s ease;
+}
+
+/* ========================================
+   CAROUSEL
+======================================== */
+
+.carousel {
+    flex: 1;
+
+    display: flex;
+
+    gap: 14px;
+
+    min-height: 0;
+
+    perspective: 1200px;
+}
+
+/* ========================================
+   CARD
+======================================== */
+
+.card {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+
+    position: relative;
+
+    flex: 1;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    border-radius: 24px;
+
+    background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.09),
+        rgba(255, 255, 255, 0.025)
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    transform-style: preserve-3d;
+
+    transition:
+        flex 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.25s ease,
+        border 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+/* ========================================
+   CARD SPOTLIGHT
+======================================== */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background: radial-gradient(
+        400px circle at var(--mouse-x) var(--mouse-y),
+        var(--accent),
+        transparent 45%
+    );
+
+    transition: opacity 0.5s ease;
+
+    mix-blend-mode: screen;
+}
+
+.card:hover::before {
+    opacity: 0.15;
+}
+
+/* ========================================
+   CARD GLOW
+======================================== */
+
+.card-glow {
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    filter: blur(100px);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.8s ease,
+        transform 1s ease;
+}
+
+.card.active .card-glow {
+    opacity: 0.18;
+
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* ========================================
+   ACTIVE CARD
+======================================== */
+
 .card.active {
     flex: 4;
+
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.35),
+        0 0 50px color-mix(in srgb, var(--accent) 15%, transparent);
 }
 
-.card.tilt {
-    transition: transform 0.1s ease;
-}
+/* ========================================
+   CARD NUMBER
+======================================== */
 
-/* Icon */
-.card .icon {
+.card-number {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 140px;
-    opacity: 0;
-    transform: translate(-50%, -40%) scale(0.4);
-    transition: all 0.8s ease;
-    color: #fff;
-}
 
-/* Animate icon drop */
-.card.active .icon {
-    opacity: 0.15;
-    transform: translate(-50%, -55%) scale(1);
-}
+    top: 25px;
+    left: 25px;
 
-/* Title */
-.card h1 {
-    text-align: center;
-    color: white;
+    font-size: 11px;
+
     letter-spacing: 2px;
-    opacity: 0.4;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
+
+    color: rgba(255, 255, 255, 0.3);
+
+    transition: color 0.5s ease;
 }
 
-/* Active text */
-.card.active h1 {
-    opacity: 1;
-    transform: translateY(0);
-    font-size: 70px;
+.card.active .card-number {
+    color: var(--accent);
 }
 
-/* Inactive card text (first letter only) */
-.card:not(.active) h1 {
-    font-size: 40px;
-    opacity: 0.8;
-}
+/* ========================================
+   ICON
+======================================== */
 
-/* Hover glow */
-.card:hover {
-    background: rgba(255, 255, 255, 0.18);
-}
-
-/* Icon stays same */
 .card .icon {
     position: absolute;
+
     top: 50%;
     left: 50%;
-    font-size: 140px;
+
+    font-size: 150px;
+
+    color: white;
+
     opacity: 0;
-    transform: translate(-50%, -40%) scale(0.4);
-    transition: all 0.8s ease;
-    color: #fff;
+
+    transform: translate(-50%, -50%) scale(0.4) rotate(-15deg);
+
+    filter: drop-shadow(
+        0 0 40px color-mix(in srgb, var(--accent) 70%, transparent)
+    );
+
+    transition:
+        opacity 0.8s ease,
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+
+    pointer-events: none;
 }
 
 .card.active .icon {
-    opacity: 0.15;
-    transform: translate(-50%, -55%) scale(1);
+    opacity: 0.08;
+
+    transform: translate(-50%, -50%) scale(1.3) rotate(0deg);
+}
+
+/* ========================================
+   CONTENT
+======================================== */
+
+.card-content {
+    position: absolute;
+
+    left: 35px;
+    right: 35px;
+    bottom: 35px;
+
+    z-index: 5;
+
+    transform: translateZ(40px);
+}
+
+.category {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.4);
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+
+.card.active .category {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+.card h1 {
+    font-size: 25px;
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    color: white;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        font-size 0.7s ease;
+}
+
+.card.active h1 {
+    font-size: clamp(38px, 5vw, 70px);
+
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* ========================================
+   CARD LINE
+======================================== */
+
+.card-line {
+    width: 0;
+    height: 2px;
+
+    margin: 18px 0;
+
+    background: var(--accent);
+
+    box-shadow: 0 0 15px var(--accent);
+
+    transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card.active .card-line {
+    width: 80px;
+}
+
+/* ========================================
+   HANDLE
+======================================== */
+
+.handle {
+    display: block;
+
+    font-size: 12px;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    opacity: 0;
+
+    transform: translateY(15px);
+
+    transition:
+        opacity 0.6s ease 0.1s,
+        transform 0.6s ease 0.1s;
+}
+
+.card.active .handle {
+    opacity: 1;
+
+    transform: translateY(0);
+}
+
+/* ========================================
+   ARROW
+======================================== */
+
+.arrow {
+    position: absolute;
+
+    top: 25px;
+    right: 25px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    color: rgba(255, 255, 255, 0.5);
+
+    opacity: 0;
+
+    transform: translateY(-10px) rotate(-45deg);
+
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease,
+        background 0.4s ease,
+        color 0.4s ease;
+}
+
+.card.active .arrow {
+    opacity: 1;
+
+    transform: translateY(0) rotate(0);
+}
+
+.arrow:hover {
+    color: white;
+
+    background: var(--accent);
+
+    border-color: var(--accent);
+
+    box-shadow: 0 0 25px var(--accent);
+}
+
+/* ========================================
+   BOTTOM LABEL
+======================================== */
+
+.bottom-label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-top: 25px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.scroll-line {
+    width: 100px;
+    height: 1px;
+
+    background: linear-gradient(90deg, var(--accent), transparent);
+
+    transition: background 0.8s ease;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 800px) {
+    .slider-wrapper {
+        width: 94vw;
+        height: 80vh;
+
+        padding: 25px;
+    }
+
+    .carousel {
+        flex-direction: column;
+    }
+
+    .card {
+        min-height: 60px;
+    }
+
+    .card.active {
+        flex: 4;
+    }
+
+    .card:not(.active) {
+        flex: 1;
+    }
+
+    .card .icon {
+        font-size: 100px;
+    }
+
+    .card-content {
+        left: 25px;
+        bottom: 20px;
+    }
+
+    .card.active h1 {
+        font-size: 38px;
+    }
+
+    .category,
+    .handle,
+    .card-line {
+        display: none;
+    }
+
+    .arrow {
+        width: 34px;
+        height: 34px;
+    }
 }

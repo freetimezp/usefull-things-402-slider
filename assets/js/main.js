@@ -1,65 +1,115 @@
 const cards = document.querySelectorAll(".card");
 const body = document.getElementById("body");
+const ambient = document.querySelector(".ambient-3");
 
-const names = {
-    instagram: "Instagram",
-    youtube: "YouTube",
-    discord: "Discord",
-    twitter: "X",
-};
+let activeCard = document.querySelector(".card.active");
 
-// Default activate first
-activateCard(cards[0]);
+// ========================================
+// ACTIVATE CARD
+// ========================================
 
-cards.forEach((card) => {
-    card.addEventListener("click", () => activateCard(card));
+function activateCard(card) {
+    if (activeCard === card) return;
 
-    // 3D Tilt Events
-    card.addEventListener("mousemove", tiltCard);
-    card.addEventListener("mouseleave", resetTilt);
-});
-
-function activateCard(activeCard) {
-    cards.forEach((card) => {
-        card.classList.remove("active");
-
-        // show only first letter on inactive
-        const name = names[card.classList[1]];
-        card.querySelector("h1").textContent = name.charAt(0);
+    cards.forEach((item) => {
+        item.classList.remove("active");
     });
 
-    // activate selected
-    activeCard.classList.add("active");
+    card.classList.add("active");
 
-    const fullName = names[activeCard.classList[1]];
-    activeCard.querySelector("h1").textContent = fullName;
+    activeCard = card;
 
-    // background color change
-    body.style.background = activeCard.dataset.color;
+    const color = card.dataset.color;
+
+    // Update CSS variable
+    document.documentElement.style.setProperty("--accent", color);
+
+    // Change ambient glow
+    ambient.style.background = color;
+
+    // Update background atmosphere
+    body.style.background = `
+        radial-gradient(
+            circle at 20% 20%,
+            ${color}18,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            ${color}10,
+            transparent 35%
+        ),
+        #08080c
+    `;
 }
 
-/* ============================
-        3D Tilt Logic
-============================ */
-function tiltCard(e) {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
+// ========================================
+// CARD CLICK
+// ========================================
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+cards.forEach((card) => {
+    card.addEventListener("click", () => {
+        activateCard(card);
+    });
 
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    // ========================================
+    // MOUSE SPOTLIGHT
+    // ========================================
 
-    const rotateX = ((y - centerY) / centerY) * 10; // up/down
-    const rotateY = ((x - centerX) / centerX) * 10; // left/right
+    card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
 
-    card.classList.add("tilt");
-    card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
-}
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-function resetTilt(e) {
-    const card = e.currentTarget;
-    card.classList.remove("tilt");
-    card.style.transform = "rotateX(0deg) rotateY(0deg)";
-}
+        const percentX = (x / rect.width) * 100;
+
+        const percentY = (y / rect.height) * 100;
+
+        card.style.setProperty("--mouse-x", `${percentX}%`);
+
+        card.style.setProperty("--mouse-y", `${percentY}%`);
+
+        // ========================================
+        // 3D TILT
+        // ========================================
+
+        const centerX = rect.width / 2;
+
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * 4;
+
+        const rotateY = ((x - centerX) / centerX) * 4;
+
+        card.style.transform = `
+            perspective(1000px)
+            rotateX(${-rotateX}deg)
+            rotateY(${rotateY}deg)
+            scale(1.015)
+        `;
+    });
+
+    // ========================================
+    // RESET TILT
+    // ========================================
+
+    card.addEventListener("mouseleave", () => {
+        card.style.transform = `
+            perspective(1000px)
+            rotateX(0deg)
+            rotateY(0deg)
+            scale(1)
+        `;
+    });
+});
+
+// ========================================
+// INITIAL COLOR
+// ========================================
+
+const initialColor = activeCard.dataset.color;
+
+document.documentElement.style.setProperty("--accent", initialColor);
+
+ambient.style.background = initialColor;

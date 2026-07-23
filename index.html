@@ -1,39 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        />
 
         <link rel="stylesheet" href="./assets/css/style.css" />
         <title>Social Slider</title>
     </head>
 
     <body id="body">
-        <div class="slider-wrapper">
+        <!-- Ambient Background -->
+        <div class="ambient ambient-1"></div>
+        <div class="ambient ambient-2"></div>
+        <div class="ambient ambient-3"></div>
+
+        <!-- Noise -->
+        <div class="noise"></div>
+
+        <!-- Main -->
+        <main class="slider-wrapper">
+            <div class="top-label">
+                <span class="status-dot"></span>
+                CONNECT WITH ME
+            </div>
+
             <div class="carousel">
-                <div class="card instagram" data-color="#E1306C">
-                    <div class="icon"><i class="fab fa-instagram"></i></div>
-                    <h1>Instagram</h1>
+                <!-- Instagram -->
+                <div
+                    class="card instagram active"
+                    data-color="#ff4d8d"
+                    data-gradient="linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)"
+                >
+                    <div class="card-glow"></div>
+
+                    <div class="card-number">01</div>
+
+                    <div class="icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+
+                    <div class="card-content">
+                        <span class="category">SOCIAL NETWORK</span>
+                        <h1>Instagram</h1>
+
+                        <div class="card-line"></div>
+
+                        <span class="handle">@yourprofile</span>
+                    </div>
+
+                    <div class="arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
                 </div>
 
-                <div class="card youtube" data-color="#FF0000">
-                    <div class="icon"><i class="fab fa-youtube"></i></div>
-                    <h1>YouTube</h1>
+                <!-- YouTube -->
+                <div
+                    class="card youtube"
+                    data-color="#ff304f"
+                    data-gradient="linear-gradient(135deg, #ff0033, #ff416c)"
+                >
+                    <div class="card-glow"></div>
+
+                    <div class="card-number">02</div>
+
+                    <div class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+
+                    <div class="card-content">
+                        <span class="category">VIDEO PLATFORM</span>
+                        <h1>YouTube</h1>
+
+                        <div class="card-line"></div>
+
+                        <span class="handle">@yourchannel</span>
+                    </div>
+
+                    <div class="arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
                 </div>
 
-                <div class="card discord" data-color="#5865F2">
-                    <div class="icon"><i class="fab fa-discord"></i></div>
-                    <h1>Discord</h1>
+                <!-- Discord -->
+                <div
+                    class="card discord"
+                    data-color="#7289ff"
+                    data-gradient="linear-gradient(135deg, #5865f2, #8b5cf6)"
+                >
+                    <div class="card-glow"></div>
+
+                    <div class="card-number">03</div>
+
+                    <div class="icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+
+                    <div class="card-content">
+                        <span class="category">COMMUNITY</span>
+                        <h1>Discord</h1>
+
+                        <div class="card-line"></div>
+
+                        <span class="handle">Join the community</span>
+                    </div>
+
+                    <div class="arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
                 </div>
 
-                <div class="card twitter" data-color="#141414">
-                    <div class="icon"><i class="fab fa-twitter"></i></div>
-                    <h1>X</h1>
+                <!-- X -->
+                <div
+                    class="card twitter"
+                    data-color="#8b8b8b"
+                    data-gradient="linear-gradient(135deg, #111111, #454545)"
+                >
+                    <div class="card-glow"></div>
+
+                    <div class="card-number">04</div>
+
+                    <div class="icon">
+                        <i class="fab fa-x-twitter"></i>
+                    </div>
+
+                    <div class="card-content">
+                        <span class="category">MICRO BLOGGING</span>
+                        <h1>X</h1>
+
+                        <div class="card-line"></div>
+
+                        <span class="handle">@yourusername</span>
+                    </div>
+
+                    <div class="arrow">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div class="bottom-label">
+                <span>SELECT PLATFORM</span>
+                <span class="scroll-line"></span>
+                <span>01 — 04</span>
+            </div>
+        </main>
 
         <script src="./assets/js/main.js"></script>
     </body>
